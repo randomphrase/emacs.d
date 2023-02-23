@@ -111,6 +111,8 @@
 
 ;; -- completion
 
+;; code stolen from https://kristofferbalintona.me/posts/202202270056/
+
 (use-package vertico
   ;; special recipe to load extensions
   :straight (vertico :files (:defaults "extensions/*")
@@ -139,20 +141,23 @@
   :init
   (marginalia-mode))
 
-(use-package corfu
+(use-package all-the-icons-completion
+  :after (marginalia all-the-icons)
+  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
   :init
-  (global-corfu-mode))
+  (all-the-icons-completion-mode))
 
-
-;; (use-package vertico-directory
-;;   :after vertico
-;;     ;; More convenient directory navigation commands
-;;   :bind (:map vertico-map
-;;               ("RET" . vertico-directory-enter)
-;;               ("DEL" . vertico-directory-delete-char)
-;;               ("M-DEL" . vertico-directory-delete-word))
-;;   ;; Tidy shadowed file names
-;;   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+(use-package corfu
+  ;;  :hook (lsp-completion-mode . kb/corfu-setup-lsp) ; Use corfu for lsp completion
+  ;;:ensure t
+  :custom
+  ;(tab-always-indent 'complete)
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0.25)
+  :init
+  (global-corfu-mode)
+  )
 
 
 ;; -- projectile
