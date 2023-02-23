@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -75,6 +77,8 @@
 ;;   :bind (([remap move-beginning-of-line] . mwim-beginning-of-code-or-line)
 ;;          ([remap move-end-of-line] . mwim-end-of-code-or-line)))
 
+(use-package general
+  :ensure t)
 
 (use-package which-key
   :hook
@@ -102,6 +106,52 @@
 ;;   (setq which-key-posframe-poshandler #'posframe-poshandler-frame-bottom-center)
 ;;   )
 
+;; -- completion
+
+(use-package vertico
+  ;; special recipe to load extensions
+  :straight (vertico :files (:defaults "extensions/*")
+                     :includes (vertico-indexed
+                                vertico-flat
+                                vertico-grid
+                                vertico-mouse
+                                vertico-quick
+                                vertico-buffer
+                                vertico-repeat
+                                vertico-reverse
+                                vertico-directory
+                                vertico-multiform
+                                vertico-unobtrusive
+                                ))
+  :init (vertico-mode)
+  )
+
+(use-package marginalia
+  :general
+  (:keymaps 'minibuffer-local-map
+   "M-A" 'marginalia-cycle)
+  :custom
+  (marginalia-max-relative-age 0)
+  (marginalia-align 'right)
+  :init
+  (marginalia-mode))
+
+(use-package corfu
+  :init
+  (global-corfu-mode))
+
+
+;; (use-package vertico-directory
+;;   :after vertico
+;;     ;; More convenient directory navigation commands
+;;   :bind (:map vertico-map
+;;               ("RET" . vertico-directory-enter)
+;;               ("DEL" . vertico-directory-delete-char)
+;;               ("M-DEL" . vertico-directory-delete-word))
+;;   ;; Tidy shadowed file names
+;;   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+
 ;; -- projectile
 
 (use-package projectile
@@ -116,3 +166,9 @@
 ;; -- magit
 
 (use-package magit)
+
+;; -- history
+
+(use-package savehist
+  :init
+  (savehist-mode))
