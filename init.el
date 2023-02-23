@@ -70,6 +70,9 @@
   ;; (doom-themes-org-config)
   )
 
+;; save/restore desktop
+(desktop-save-mode 1)
+
 ;; -- global keys
 
   ;; Move to the beginning/end of line or code
