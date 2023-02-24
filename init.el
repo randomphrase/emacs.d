@@ -368,6 +368,9 @@
 
 (setq compilation-scroll-output 'first-error)
 
+(use-package editorconfig
+  :hook (after-init . editorconfig-mode))
+
 ;; -- c++
 
 (defconst ar-c-style
