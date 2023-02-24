@@ -117,6 +117,10 @@
   (after-init . which-key-mode)
 )
 
+(use-package delsel
+  :hook
+  (after-init . delete-selection-mode))
+
 ;; Get rid of overwrite-mode, this one is far more useful
 (global-set-key [remap overwrite-mode] 'copy-from-above-command)
 
