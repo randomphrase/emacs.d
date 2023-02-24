@@ -57,8 +57,8 @@
   ;;       doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (load-theme 'doom-one t)
 
-  ;; ;; Enable flashing mode-line on errors
-  ;; (doom-themes-visual-bell-config)
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
   ;; ;; Enable custom neotree theme (all-the-icons must be installed!)
   ;; (doom-themes-neotree-config)
   ;; ;; or for treemacs users
