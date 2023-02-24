@@ -86,7 +86,10 @@
           "Output\\*$"
           "\\*Async Shell Command\\*"
           help-mode
-          compilation-mode))
+          compilation-mode
+	  helpful-mode
+	  "^\\*vterm.*\\*$"  vterm-mode
+	  ))
   (popper-mode +1)
   (popper-echo-mode +1))                ; For echo area hints
 
@@ -365,7 +368,9 @@
                (xterm-color-filter string))))
   (advice-add 'compilation-filter :around #'my-advice-compilation-filter))
 
-(use-package vterm)
+(use-package vterm
+  :bind (("<f9>" . vterm))
+  )
 
 ;; -- programming
 
