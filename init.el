@@ -396,6 +396,7 @@
   (setq lsp-keymap-prefix "C-c l")
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
          (c++-mode . lsp-deferred)
+	 (cmake-mode . lsp-deferred)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands (lsp lsp-deferred))
@@ -428,6 +429,7 @@
 ;; .ipp files are common in boost
 (add-to-list 'auto-mode-alist '("\\.ipp\\'" . c++-mode) t)
 
+(use-package cmake-mode)
 
 ;; -- server
 
