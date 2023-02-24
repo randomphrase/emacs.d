@@ -346,6 +346,10 @@
 
 (use-package magit)
 
+(use-package magit-delta
+  :if (executable-find "delta")
+  :hook (magit-mode . magit-delta-mode))
+
 ;; -- shell
 
 ;; ANSI & XTERM 256 color support
