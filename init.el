@@ -115,7 +115,11 @@
   (projectile-mode +1)
   :bind (:map projectile-mode-map
               ("s-p" . projectile-command-map)
-              ("C-c p" . projectile-command-map)))
+              ("C-c p" . projectile-command-map)
+	      ("<f12>" . projectile-compile-project)
+	      ("C-<f12>" . projectile-test-project)
+	      ("M-C-<f12>" . recompile)
+	      ))
 
 
 (use-package savehist
@@ -333,13 +337,6 @@
   "My C++ Indentation Style")
 
 (defun my-c-initialization-hook ()
-  ;; this hook runs after init-c bindings
-  (unbind-key "<f12>" c-mode-base-map)
-  (bind-keys :map projectile-mode-map
-    ("<f12>" . projectile-compile-project)
-    ("C-<f12>" . projectile-test-project)
-    ("M-C-<f12>" . recompile))
-
   (c-add-style "ar" ar-c-style)
   (setq c-default-style "ar")
   )
