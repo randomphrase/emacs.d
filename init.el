@@ -324,6 +324,8 @@
   :commands (lsp lsp-deferred))
 
 
+(setq compilation-scroll-output 'first-error)
+
 ;; -- c++
 
 (defconst ar-c-style
