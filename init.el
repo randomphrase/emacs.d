@@ -91,7 +91,15 @@
 	  "^\\*vterm.*\\*$"  vterm-mode
 	  ))
   (popper-mode +1)
-  (popper-echo-mode +1))                ; For echo area hints
+  (popper-echo-mode +1)
+  (setq popper-window-height  (lambda (win)
+				(fit-window-to-buffer
+				 win
+				 (floor (frame-height) 3)
+				 (floor (frame-height) 3)
+				 )))
+  )
+
 
 
 ;; -- global keys
