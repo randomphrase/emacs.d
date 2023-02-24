@@ -21,6 +21,8 @@
 ;; each 50MB of allocated data (the default is on every 0.76MB)
 (setq gc-cons-threshold 50000000)
 
+(straight-use-package 'use-package)
+
 ;; -- user interface
 
 ;; the toolbar is just a waste of valuable screen estate
