@@ -154,6 +154,8 @@
 	      ("M-C-<f12>" . recompile)
 	      ))
 
+(use-package rg
+  :bind ("C-c s" . rg-menu))
 
 (use-package savehist
   :init
