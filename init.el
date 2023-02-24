@@ -68,7 +68,7 @@
   ;; (doom-themes-org-config)
   )
 
-
+(setq frame-title-format '("Emacs - " user-login-name "@" system-name ":%f"))
 
 ;; save/restore desktop
 (desktop-save-mode 1)
