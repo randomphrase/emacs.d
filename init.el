@@ -122,6 +122,8 @@
   :init
   (savehist-mode))
 
+(recentf-mode 1)
+
 ;; (use-package which-key-posframe
 ;;   :after which-key
 ;;   :init
