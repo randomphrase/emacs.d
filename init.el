@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t -*-
 
+(setq straight-use-package-by-default t)
+(setq straight-fix-flycheck t)
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -13,7 +16,6 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(setq straight-use-package-by-default t)
 
 ;; reduce the frequency of garbage collection by making it happen on
 ;; each 50MB of allocated data (the default is on every 0.76MB)
@@ -70,6 +72,8 @@
   ;; (doom-themes-org-config)
   )
 
+
+
 ;; save/restore desktop
 (desktop-save-mode 1)
 
@@ -88,6 +92,10 @@
   (after-init . which-key-mode)
 )
 
+;; Get rid of overwrite-mode, this one is far more useful
+(global-set-key [remap overwrite-mode] 'copy-from-above-command)
+
+(fset 'yes-or-no-p 'y-or-n-p)
 
 ;; -- help
 
@@ -102,6 +110,21 @@
          ("r"                       . remove-hook-at-point))
   )
 
+
+;; -- projectile
+
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ("s-p" . projectile-command-map)
+              ("C-c p" . projectile-command-map)))
+
+
+(use-package savehist
+  :init
+  (savehist-mode))
 
 ;; (use-package which-key-posframe
 ;;   :after which-key
@@ -160,23 +183,69 @@
   )
 
 
-;; -- projectile
-
-(use-package projectile
-  :ensure t
-  :init
-  (projectile-mode +1)
-  :bind (:map projectile-mode-map
-              ("s-p" . projectile-command-map)
-              ("C-c p" . projectile-command-map)))
-
-
 ;; -- magit
 
 (use-package magit)
 
-;; -- history
+;; -- programming
 
-(use-package savehist
+(use-package flycheck
   :init
-  (savehist-mode))
+  (global-flycheck-mode))
+
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (c++-mode . lsp-deferred)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands (lsp lsp-deferred))
+
+
+;; -- c++
+
+(defconst ar-c-style
+  '((c-basic-offset . 4)
+    (c-offsets-alist . ((inlambda . 0 )
+                        (innamespace . 0)
+                        (inline-open . 0)
+                        (substatement-open . 0)
+                        (arglist-cont-nonempty . +)
+                        ))
+    )
+  "My C++ Indentation Style")
+
+(defun my-c-initialization-hook ()
+  ;; this hook runs after init-c bindings
+  (unbind-key "<f12>" c-mode-base-map)
+  (bind-keys :map projectile-mode-map
+    ("<f12>" . projectile-compile-project)
+    ("C-<f12>" . projectile-test-project)
+    ("M-C-<f12>" . recompile))
+
+  (c-add-style "ar" ar-c-style)
+  (setq c-default-style "ar")
+  )
+(add-hook 'c-initialization-hook 'my-c-initialization-hook)
+
+;; .ipp files are common in boost
+(add-to-list 'auto-mode-alist '("\\.ipp\\'" . c++-mode) t)
+
+
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("1cae4424345f7fe5225724301ef1a793e610ae5a4e23c023076dc334a9eb940a" "1a1ac598737d0fcdc4dfab3af3d6f46ab2d5048b8e72bc22f50271fd6d393a00" "7a424478cb77a96af2c0f50cfb4e2a88647b3ccca225f8c650ed45b7f50d9525" default)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
