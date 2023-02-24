@@ -217,6 +217,12 @@
   (global-corfu-mode)
   )
 
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
 (use-package consult
     :bind (;; C-c bindings (mode-specific-map)
          ("C-c M-x" . consult-mode-command)
