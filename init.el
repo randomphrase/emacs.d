@@ -391,6 +391,9 @@
 (add-to-list 'auto-mode-alist '("\\.ipp\\'" . c++-mode) t)
 
 
+;; -- server
+
+(server-mode 1)
 
 
 (custom-set-variables
