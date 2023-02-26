@@ -126,6 +126,11 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
+(use-package mwim
+  :bind (("<home>" . mwim-beginning)
+	 ("<end>" . mwim-end))
+  )
+
 ;; -- help
 
 (use-package helpful
