@@ -209,6 +209,7 @@
   (all-the-icons-completion-mode))
 
 (use-package corfu
+  :when (display-graphic-p)
   ;;  :hook (lsp-completion-mode . kb/corfu-setup-lsp) ; Use corfu for lsp completion
   ;;:ensure t
   :custom
@@ -219,6 +220,11 @@
   :init
   (global-corfu-mode)
   )
+
+(use-package corfu-terminal
+  :unless (display-graphic-p)
+  :init
+  (corfu-terminal-mode +1))
 
 (use-package orderless
   :ensure t
