@@ -109,9 +109,6 @@
 ;;   :bind (([remap move-beginning-of-line] . mwim-beginning-of-code-or-line)
 ;;          ([remap move-end-of-line] . mwim-end-of-code-or-line)))
 
-(use-package general
-  :ensure t)
-
 (use-package which-key
   :hook
   (after-init . which-key-mode)
@@ -197,9 +194,8 @@
   )
 
 (use-package marginalia
-  :general
-  (:keymaps 'minibuffer-local-map
-   "M-A" 'marginalia-cycle)
+  :bind (:map minibuffer-local-map
+	      ("M-A" . marginalia-cycle))
   :custom
   (marginalia-max-relative-age 0)
   (marginalia-align 'right)
