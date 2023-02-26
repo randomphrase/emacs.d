@@ -413,6 +413,9 @@
 (use-package editorconfig
   :hook (after-init . editorconfig-mode))
 
+(use-package yaml-mode
+  :mode "\\.ya?ml\\'")
+
 ;; -- c++
 
 (defconst ar-c-style
