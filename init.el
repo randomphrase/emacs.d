@@ -435,6 +435,11 @@
 
 (use-package cmake-mode)
 
+
+;; -- python
+
+(use-package pyvenv)
+
 ;; -- server
 
 (server-mode 1)
