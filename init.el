@@ -443,7 +443,10 @@
 
 ;; -- python
 
-(use-package pyvenv)
+(use-package pipenv
+  :hook (python-mode . pipenv-mode)
+)
+
 
 ;; -- server
 
