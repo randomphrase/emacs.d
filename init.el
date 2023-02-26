@@ -361,10 +361,8 @@
 
 ;; ANSI & XTERM 256 color support
 (use-package xterm-color
-  :defines (compilation-environment
-            eshell-preoutput-filter-functions
-            eshell-output-filter-functions)
-  :functions (compilation-filter my-advice-compilation-filter)
+  :defines (compilation-environment)
+  :functions (compilation-filter my-advice-compilation-filter xterm-color-filter)
   :init
   ;; For shell and interpreters
   ;;(setenv "TERM" "xterm-256color")
@@ -372,21 +370,13 @@
         (remove 'ansi-color-process-output comint-output-filter-functions))
   (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter)
   (add-hook 'shell-mode-hook
+	    ;; TODO: needed?
             (lambda ()
               ;; Disable font-locking to improve performance
               (font-lock-mode -1)
               ;; Prevent font-locking from being re-enabled
               (make-local-variable 'font-lock-function)
               (setq font-lock-function #'ignore)))
-
-  ;; ;; For eshell
-  ;; (with-eval-after-load 'esh-mode
-  ;;   (add-hook 'eshell-before-prompt-hook
-  ;;             (lambda ()
-  ;;               (setq xterm-color-preserve-properties t)))
-  ;;   (add-to-list 'eshell-preoutput-filter-functions 'xterm-color-filter)
-  ;;   (setq eshell-output-filter-functions
-  ;;         (remove 'eshell-handle-ansi-color eshell-output-filter-functions)))
 
   ;; For compilation buffers
   (setq compilation-environment '("TERM=xterm-256color"))
