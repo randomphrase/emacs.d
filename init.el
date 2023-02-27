@@ -361,19 +361,12 @@
 
 ;; -- shell
 
-;; ANSI & XTERM 256 color support
-(use-package xterm-color
-  :defines (compilation-environment)
-  :functions (compilation-filter my-advice-compilation-filter xterm-color-filter)
-  :init
-  ;; For compilation buffers
-  (setq compilation-environment '("TERM=xterm-256color"))
-  (defun my-advice-compilation-filter (f proc string)
-    (funcall f proc
-             (if (eq major-mode 'rg-mode) ; compatible with `rg'
-                 string
-               (xterm-color-filter string))))
-  (advice-add 'compilation-filter :around #'my-advice-compilation-filter))
+(use-package ansi-color
+  :hook
+  (compilation-filter . ansi-color-compilation-filter)
+  :custom
+  (ansi-color-for-compilation-mode t)
+  )
 
 (use-package vterm
   :bind (("<f9>" . vterm))
