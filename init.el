@@ -386,6 +386,10 @@
   (python-mode . eglot-ensure)
   )
 
+(use-package flycheck-eglot
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode 1))
 
 (setq compilation-scroll-output 'first-error)
 
