@@ -88,6 +88,7 @@
           help-mode
           compilation-mode
 	  helpful-mode
+	  flycheck-error-list-mode flycheck-verify-mode
 	  "^\\*vterm.*\\*$"  vterm-mode
 	  ))
   (popper-mode +1)
