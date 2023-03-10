@@ -402,6 +402,9 @@
 (use-package yaml-mode
   :mode "\\.ya?ml\\'")
 
+(use-package markdown-mode
+  :ensure t)
+
 ;; -- c++
 
 (defconst ar-c-style
