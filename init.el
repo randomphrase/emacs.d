@@ -147,7 +147,11 @@
 
 ;; -- projectile
 
+(use-package project
+  :ensure t)
+
 (use-package projectile
+  :after (project)
   :ensure t
   :init
   (projectile-mode +1)
@@ -382,6 +386,7 @@
   (global-flycheck-mode))
 
 (use-package eglot
+  :after (project)
   :hook
   (c-mode . eglot-ensure)
   (c++-mode . eglot-ensure)
