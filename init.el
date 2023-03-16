@@ -380,19 +380,16 @@
   :init
   (global-flycheck-mode))
 
-(use-package eglot
-  :after (project)
-  :hook
-  (c-mode . eglot-ensure)
-  (c++-mode . eglot-ensure)
-  (cmake-mode . eglot-ensure)
-  (python-mode . eglot-ensure)
-  )
-
-(use-package flycheck-eglot
-  :after (flycheck eglot)
-  :config
-  (global-flycheck-eglot-mode 1))
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (c++-mode . lsp-deferred)
+	 (cmake-mode . lsp-deferred)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands (lsp lsp-deferred))
 
 (setq compilation-scroll-output 'first-error)
 
