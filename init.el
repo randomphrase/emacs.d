@@ -33,15 +33,10 @@
 (when (fboundp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode t))
 
-(cond
- ((find-font (font-spec :name "Cascadia Code"))
-  (set-frame-font "Cascadia Code-14"))
- ((find-font (font-spec :name "Menlo"))
-  (set-frame-font "Menlo-14"))
- ((find-font (font-spec :name "DejaVu Sans Mono"))
-  (set-frame-font "DejaVu Sans Mono-14"))
- ((find-font (font-spec :name "Inconsolata"))
-  (set-frame-font "Inconsolata-14")))
+;; see https://emacsredux.com/blog/2023/03/16/setting-the-default-font-for-emacs/
+(set-frame-font (format "%s-14" (cl-find-if (lambda (fn) (find-font (font-spec :name fn)))
+					    '("Cascadia Code" "Menlo" "DejaVu Sans Mono" "Inconsolata")))
+		nil t)
 
 (use-package all-the-icons)
 
