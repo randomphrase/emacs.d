@@ -193,6 +193,10 @@
                                 vertico-unobtrusive
                                 ))
   :init (vertico-mode)
+  :bind (:map vertico-map
+	      ("<prior>" . vertico-scroll-down)
+	      ("<next>" . vertico-scroll-up)
+	      )
   )
 
 (use-package marginalia
