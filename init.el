@@ -397,7 +397,9 @@
          (c++-mode . lsp-deferred)
 	 (cmake-mode . lsp-deferred)
          ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
+         (lsp-mode . lsp-enable-which-key-integration)
+	 (typescript-ts-mode . lsp-deferred)
+	 )
   :commands (lsp lsp-deferred))
 
 (setq compilation-scroll-output 'first-error)
