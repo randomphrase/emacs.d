@@ -437,6 +437,9 @@
   :hook (python-mode . pipenv-mode)
 )
 
+;; -- typescript
+
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode) t)
 
 ;; -- server
 
