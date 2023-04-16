@@ -380,6 +380,11 @@
 
 ;; -- programming
 
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode)
+  (setq treesit-auto-install t))
+
 (use-package flycheck
   :init
   (global-flycheck-mode))
