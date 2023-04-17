@@ -383,6 +383,7 @@
 ;; -- programming
 
 (use-package treesit-auto
+  :if (and (fboundp 'treesit-available-p) (treesit-available-p)) ;; FIXME
   :config
   (global-treesit-auto-mode)
   (setq treesit-auto-install t))
