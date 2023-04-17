@@ -445,6 +445,12 @@
   :hook (python-mode . pipenv-mode)
 )
 
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))  ; or lsp-deferred
+
 ;; -- typescript
 
 (use-package typescript-mode
