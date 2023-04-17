@@ -38,6 +38,8 @@
 					    '("Cascadia Code" "Menlo" "DejaVu Sans Mono" "Inconsolata")))
 		nil t)
 
+(setq split-height-threshold 100)
+
 (use-package all-the-icons)
 
 (use-package doom-modeline
