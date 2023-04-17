@@ -398,6 +398,7 @@
 	 (cmake-mode . lsp-deferred)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration)
+	 (typescript-mode . lsp-deferred)
 	 (typescript-ts-mode . lsp-deferred)
 	 )
   :commands (lsp lsp-deferred))
@@ -446,7 +447,12 @@
 
 ;; -- typescript
 
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode) t)
+(use-package typescript-mode
+  :unless (fboundp 'typescript-ts-mode)
+  :mode "\\.ts\\'"
+  )
+(when (fboundp 'typescript-ts-mode)
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode)))
 
 ;; -- server
 
