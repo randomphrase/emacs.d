@@ -141,6 +141,8 @@
          ("r"                       . remove-hook-at-point))
   )
 
+(use-package info+
+  :ensure t)
 
 ;; -- projectile
 
