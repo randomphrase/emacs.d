@@ -466,8 +466,6 @@
 
 ;; -- server
 
-(setq server-use-tcp t)
-(setq server-port 12345)
 (server-mode 1)
 
 
