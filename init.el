@@ -40,7 +40,7 @@
 
 (setq split-height-threshold 100)
 
-(use-package all-the-icons)
+(use-package nerd-icons)
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
@@ -212,11 +212,10 @@
   :init
   (marginalia-mode))
 
-(use-package all-the-icons-completion
-  :after (marginalia all-the-icons)
-  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
-  :init
-  (all-the-icons-completion-mode))
+(use-package nerd-icons-completion
+  :ensure t
+  :config
+  (nerd-icons-completion-mode))
 
 (use-package corfu
   :when (display-graphic-p)
