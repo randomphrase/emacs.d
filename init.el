@@ -67,6 +67,10 @@
 
 (setq frame-title-format '("Emacs - " user-login-name "@" system-name ":%f"))
 
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
 ;; save/restore desktop
 (desktop-save-mode 1)
 
