@@ -425,6 +425,10 @@
 	 )
   :commands (lsp lsp-deferred))
 
+(use-package yasnippet
+  :hook (prog-mode . yas-minor-mode)
+  )
+
 (setq compilation-scroll-output 'first-error)
 
 (use-package editorconfig
