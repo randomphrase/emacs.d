@@ -127,6 +127,11 @@
 	 ("<end>" . mwim-end))
   )
 
+;; my fingers are used to meta as 'the one next to the space bar', so this is to not disappoint them:
+(customize-set-variable 'ns-command-modifier 'meta)
+(customize-set-variable 'ns-alternate-modifier 'super)
+
+
 ;; -- help
 
 (use-package helpful
