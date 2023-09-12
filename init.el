@@ -71,6 +71,16 @@
   :hook
   (dired-mode . nerd-icons-dired-mode))
 
+(use-package pulsar
+  :ensure t
+  :init
+  (pulsar-global-mode 1)
+  :hook
+  (next-error . pulsar-pulse-line)
+  (consult-after-jump . pulsar-recenter-top)
+  (consult-after-jump . pulsar-reveal-entry)
+  )
+
 ;; save/restore desktop
 (desktop-save-mode 1)
 
