@@ -407,24 +407,32 @@
   :init
   (global-flycheck-mode))
 
-(use-package lsp-mode
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
+;; (use-package lsp-mode
+;;   :init
+;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;;   (setq lsp-keymap-prefix "C-c l")
+;;   :config
+;;   (push "[/\\\\]\\.cache\\'" lsp-file-watch-ignored-directories) ;; clangd stores its index here
+;;   (push "[/\\\\]build\\(\\.[^/\\\\]+\\)?\\'" lsp-file-watch-ignored-directories) ;; ignore build(.foo) directories too
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          (c++-mode . lsp-deferred)
+;; 	 (c++-ts-mode . lsp-deferred)
+;; 	 (cmake-mode . lsp-deferred)
+;; 	 (cmake-ts-mode . lsp-deferred)
+;;          ;; if you want which-key integration
+;;          (lsp-mode . lsp-enable-which-key-integration)
+;; 	 (typescript-mode . lsp-deferred)
+;; 	 (typescript-ts-mode . lsp-deferred)
+;; 	 )
+;;   :commands (lsp lsp-deferred))
+
+(use-package eglot
   :config
-  (push "[/\\\\]\\.cache\\'" lsp-file-watch-ignored-directories) ;; clangd stores its index here
-  (push "[/\\\\]build\\(\\.[^/\\\\]+\\)?\\'" lsp-file-watch-ignored-directories) ;; ignore build(.foo) directories too
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (c++-mode . lsp-deferred)
-	 (c++-ts-mode . lsp-deferred)
-	 (cmake-mode . lsp-deferred)
-	 (cmake-ts-mode . lsp-deferred)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration)
-	 (typescript-mode . lsp-deferred)
-	 (typescript-ts-mode . lsp-deferred)
-	 )
-  :commands (lsp lsp-deferred))
+  ;; load lsp servers from where lsp-mode puts them
+  ;; TODO: add/update these
+  (setq exec-path (nconc exec-path (file-expand-wildcards
+				    (expand-file-name ".cache/lsp/npm/*/bin" user-emacs-directory))))
+  )
 
 (use-package yasnippet
   :hook (prog-mode . yas-minor-mode)
@@ -472,11 +480,17 @@
   :hook (python-mode . pipenv-mode)
 )
 
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp))))  ; or lsp-deferred
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook (python-mode . (lambda ()
+;;                           (require 'lsp-pyright)
+;;                           (lsp))))  ; or lsp-deferred
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+	       '(python-ts-mode . ("pyright-langserver" "--stdio")))
+  (add-hook 'python-ts-mode-hook 'eglot-ensure)
+  )
 
 ;; -- typescript
 
