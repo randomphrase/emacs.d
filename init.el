@@ -54,7 +54,10 @@
   )
 
 (use-package ef-themes
-  :init (load-theme 'ef-night :no-confirm))
+  :init (load-theme 'ef-night :no-confirm)
+  :custom
+  (ef-themes-common-palette-overrides '((bg-region bg-cyan-subtle)))
+  )
 
 (setq frame-title-format '("Emacs - " user-login-name "@" system-name ":%f"))
 
