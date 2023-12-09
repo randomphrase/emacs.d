@@ -152,6 +152,9 @@
 (use-package info+
   :ensure t)
 
+(use-package devdocs
+  :bind ("C-h D" . devdocs-lookup))
+
 ;; -- projectile
 
 (use-package project
