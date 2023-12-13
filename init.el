@@ -482,10 +482,6 @@
 
 ;; -- python
 
-(use-package pipenv
-  :hook (python-mode . pipenv-mode)
-)
-
 ;; (use-package lsp-pyright
 ;;   :ensure t
 ;;   :hook (python-mode . (lambda ()
@@ -524,6 +520,14 @@ select."
   )
 (when (fboundp 'typescript-ts-mode)
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode)))
+
+;; -- envrc
+;; As advised by the doco, this is initialized late in the startup sequence
+
+(use-package envrc
+  :if (executable-find "direnv")
+  :config (envrc-global-mode)
+  )
 
 ;; -- server
 
