@@ -455,6 +455,8 @@
 (use-package markdown-mode
   :ensure t)
 
+(use-package dockerfile-mode)
+
 ;; -- c++
 
 (defconst ar-c-style
