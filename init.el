@@ -73,6 +73,8 @@
   (next-error . pulsar-pulse-line)
   (consult-after-jump . pulsar-recenter-top)
   (consult-after-jump . pulsar-reveal-entry)
+  (imenu-after-jump-hook . pulsar-recenter-top)
+  (imenu-after-jump-hook . pulsar-reveal-entry)
   )
 
 ;; save/restore desktop
