@@ -422,6 +422,9 @@
   :config
   (push "[/\\\\]\\.cache\\'" lsp-file-watch-ignored-directories) ;; clangd stores its index here
   (push "[/\\\\]build\\(\\.[^/\\\\]+\\)?\\'" lsp-file-watch-ignored-directories) ;; ignore build(.foo) directories too
+  :custom
+  (lsp-headerline-breadcrumb-segments '(symbols))
+  (lsp-enable-on-type-formatting nil)
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
          (c++-mode . lsp-deferred)
 	 (c++-ts-mode . lsp-deferred)
