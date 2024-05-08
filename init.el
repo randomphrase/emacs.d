@@ -49,6 +49,10 @@
 
 (use-package nerd-icons)
 
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
   )
@@ -60,10 +64,6 @@
   )
 
 (setq frame-title-format '("Emacs - " user-login-name "@" system-name ":%f"))
-
-(use-package nerd-icons-dired
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
 
 (use-package pulsar
   :ensure t
