@@ -157,6 +157,9 @@
 (use-package devdocs
   :bind ("C-h D" . devdocs-lookup))
 
+(use-package casual-dired
+  :bind (:map dired-mode-map ("C-o" . casual-dired-tmenu)))
+
 ;; -- projectile
 
 (use-package project
