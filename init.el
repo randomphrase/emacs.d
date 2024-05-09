@@ -158,6 +158,7 @@
   :bind ("C-h D" . devdocs-lookup))
 
 (use-package casual-dired
+  :after (dired)
   :bind (:map dired-mode-map ("C-o" . casual-dired-tmenu)))
 
 ;; -- projectile
