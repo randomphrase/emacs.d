@@ -82,6 +82,26 @@
 
 ;; -- window management
 
+;; stolen from https://karthinks.com/software/emacs-window-management-almanac/
+
+(advice-add 'other-window :before
+            (defun other-window-split-if-single (&rest _)
+              "Split the frame if there is a single window."
+              (when (one-window-p) (split-window-sensibly))))
+
+(defalias 'other-window-alternating
+    (let ((direction 1))
+      (lambda (&optional arg)
+        "Call `other-window', switching directions each time."
+        (interactive)
+        (if (equal last-command 'other-window-alternating)
+            (other-window (* direction (or arg 1)))
+          (setq direction (- direction))
+          (other-window (* direction (or arg 1)))))))
+
+(keymap-global-set "M-o" 'other-window-alternating)
+
+
 (use-package popper
   :ensure t ; or :straight t
   :bind (("C-`"   . popper-toggle)
