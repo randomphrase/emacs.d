@@ -101,6 +101,20 @@
 
 (keymap-global-set "M-o" 'other-window-alternating)
 
+(defun move-buffer-to-window (wnum)
+  "Moves the current buffer to window `WNUM'."
+  ;; stolen from spacemacs, see https://github.com/syl20bnr/spacemacs/blob/195090a247496d44907084a3ee1d128f54622216/layers/%2Bspacemacs/spacemacs-defaults/funcs.el#L297
+  (interactive)
+  (let ((b (current-buffer))
+        (w1 (selected-window))
+        (w2 (winum-get-window-by-number wnum)))
+    (unless (eq w1 w2)
+      (set-window-buffer w2 b)
+      (switch-to-prev-buffer)
+      (unrecord-window-buffer w1 b))
+    ;; (when follow-focus-pa
+    ;;   (select-window (winum-get-window-by-number windownum))))))
+    ))
 
 (use-package popper
   :ensure t ; or :straight t
@@ -132,19 +146,43 @@
 ;;   :bind ("M-o" . ace-window)
 ;;   )
 
+(defun winum-select-or-move (wnum &optional arg)
+  (interactive "P")
+  (if arg (move-buffer-to-window wnum)
+    (winum-select-window-by-number wnum)))
+
+(defun winum-select-or-move-1 (&optional arg)
+  (interactive "P")
+  (winum-select-or-move 1 arg))
+(defun winum-select-or-move-2 (&optional arg)
+  (interactive "P")
+  (winum-select-or-move 2 arg))
+(defun winum-select-or-move-3 (&optional arg)
+  (interactive "P")
+  (winum-select-or-move 3 arg))
+(defun winum-select-or-move-4 (&optional arg)
+  (interactive "P")
+  (winum-select-or-move 4 arg))
+(defun winum-select-or-move-5 (&optional arg)
+  (interactive "P")
+  (winum-select-or-move 5 arg))
+(defun winum-select-or-move-6 (&optional arg)
+  (interactive "P")
+  (winum-select-or-move 6 arg))
+
 (use-package winum
   :bind
   (:map winum-keymap
 	("M-0" . winum-select-window-0-or-10)
-	("M-1" . winum-select-window-1)
-	("M-2" . winum-select-window-2)
-	("M-3" . winum-select-window-3)
-	("M-4" . winum-select-window-4)
-	("M-5" . winum-select-window-5)
-	("M-6" . winum-select-window-6)
-	("M-7" . winum-select-window-7)
-	("M-8" . winum-select-window-8)
-	("M-9" . winum-select-window-9))
+	("M-1" . winum-select-or-move-1)
+	("M-2" . winum-select-or-move-2)
+	("M-3" . winum-select-or-move-3)
+	("M-4" . winum-select-or-move-4)
+	("M-5" . winum-select-or-move-5)
+	("M-6" . winum-select-or-move-6)
+	("M-7" . winum-select-or-move-7)
+	("M-8" . winum-select-or-move-8)
+	("M-9" . winum-select-or-move-9))
   :init
   (winum-mode)
   )
