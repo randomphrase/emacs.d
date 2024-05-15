@@ -151,24 +151,12 @@
   (if arg (move-buffer-to-window wnum)
     (winum-select-window-by-number wnum)))
 
-(defun winum-select-or-move-1 (&optional arg)
-  (interactive "P")
-  (winum-select-or-move 1 arg))
-(defun winum-select-or-move-2 (&optional arg)
-  (interactive "P")
-  (winum-select-or-move 2 arg))
-(defun winum-select-or-move-3 (&optional arg)
-  (interactive "P")
-  (winum-select-or-move 3 arg))
-(defun winum-select-or-move-4 (&optional arg)
-  (interactive "P")
-  (winum-select-or-move 4 arg))
-(defun winum-select-or-move-5 (&optional arg)
-  (interactive "P")
-  (winum-select-or-move 5 arg))
-(defun winum-select-or-move-6 (&optional arg)
-  (interactive "P")
-  (winum-select-or-move 6 arg))
+;; define winum-select-or-move-N functions
+(dotimes (i 10)
+  (eval `(defun ,(intern (format "winum-select-or-move-%i" i)) (&optional arg)
+           ,(format "Select window %i or (with ARG) move the current buffer to that window" i)
+           (interactive "P")
+           (winum-select-or-move ,i arg))))
 
 (use-package winum
   :bind
