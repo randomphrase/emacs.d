@@ -200,6 +200,8 @@
 (customize-set-variable 'ns-command-modifier 'meta)
 (customize-set-variable 'ns-alternate-modifier 'super)
 
+;; ibuffer is more full featured than list-buffers
+(global-set-key [remap list-buffers] 'ibuffer)
 
 ;; -- help
 
