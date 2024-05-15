@@ -200,9 +200,6 @@
 (customize-set-variable 'ns-command-modifier 'meta)
 (customize-set-variable 'ns-alternate-modifier 'super)
 
-;; ibuffer is more full featured than list-buffers
-(global-set-key [remap list-buffers] 'ibuffer)
-
 ;; -- help
 
 (use-package helpful
@@ -252,6 +249,12 @@
   (savehist-mode))
 
 (recentf-mode 1)
+
+;; ibuffer is more full featured than list-buffers
+(use-package ibuffer-vc
+  :hook (ibuffer . ibuffer-vc-set-filter-groups-by-vc-root)
+  :bind ([remap list-buffers] . ibuffer)
+  )
 
 ;; (use-package which-key-posframe
 ;;   :after which-key
