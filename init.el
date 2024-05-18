@@ -574,6 +574,7 @@
 (use-package envrc
   :if (executable-find "direnv")
   :config (envrc-global-mode)
+  :bind ("C-c e" . envrc-command-map)
   )
 
 ;; -- server
