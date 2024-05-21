@@ -479,9 +479,11 @@
 
 (use-package treesit-auto
   :if (and (fboundp 'treesit-available-p) (treesit-available-p)) ;; FIXME
+  :custom
+  (treesit-auto-install 'prompt)
   :config
   (global-treesit-auto-mode)
-  (setq treesit-auto-install t))
+  )
 
 (use-package flycheck
   :init
