@@ -528,7 +528,17 @@
 
 (use-package dockerfile-mode)
 
-;; -- c++
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+  :ensure t
+  :bind (:map copilot-mode-map
+              ("M-C-<return>" . copilot-accept-completion)
+              ("C-<right>" . copilot-accept-completion-by-word)
+              ("C-<down>" . copilot-accept-completion-by-line)
+	      ))
+
+
+;; -- C++
 
 (defconst ar-c-style
   '((c-basic-offset . 4)
