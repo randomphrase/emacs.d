@@ -77,8 +77,6 @@
   (imenu-after-jump-hook . pulsar-reveal-entry)
   )
 
-;; save/restore desktop
-(desktop-save-mode 1)
 
 ;; -- window management
 
@@ -588,6 +586,9 @@
   :config (envrc-global-mode)
   :bind ("C-c e" . envrc-command-map)
   )
+
+;; save/restore desktop - do last to ensure all modes are ready
+(desktop-save-mode 1)
 
 ;; -- server
 
