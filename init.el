@@ -480,6 +480,14 @@
   :custom
   (treesit-auto-install 'prompt)
   :config
+  (add-to-list 'treesit-auto-recipe-list
+	       (make-treesit-auto-recipe
+		:lang 'nix
+		:ts-mode 'nix-ts-mode
+		:remap 'nix-mode
+		:url "https://github.com/nix-community/tree-sitter-nix"
+		:ext "\\.nix\\'"))
+  ;(push 'nix treesit-auto-langs) ;; needed?
   (global-treesit-auto-mode)
   )
 
@@ -577,6 +585,11 @@
   )
 (when (fboundp 'typescript-ts-mode)
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode)))
+
+;; -- nix
+
+(use-package nix-ts-mode
+  :mode "\\.nix\\'")
 
 ;; -- envrc
 ;; As advised by the doco, this is initialized late in the startup sequence
