@@ -568,6 +568,9 @@
 
 (use-package cmake-mode)
 
+(use-package meson-mode
+  :mode "meson.build\\'")
+
 
 ;; -- python
 
