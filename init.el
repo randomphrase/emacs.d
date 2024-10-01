@@ -173,6 +173,15 @@
   (winum-mode)
   )
 
+;; -- external
+
+(use-package exec-path-from-shell
+  :when (memq window-system '(mac ns))
+  :config
+  (exec-path-from-shell-initialize)
+  ;; 
+  )
+
 ;; -- global keys
 
 (use-package which-key
