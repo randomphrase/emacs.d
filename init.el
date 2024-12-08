@@ -226,9 +226,12 @@
 (use-package devdocs
   :bind ("C-h D" . devdocs-lookup))
 
-(use-package casual-dired
+(use-package casual
   :after (dired)
-  :bind (:map dired-mode-map ("C-o" . casual-dired-tmenu)))
+  :bind (:map dired-mode-map ("?" . casual-dired-tmenu)
+	 :map ibuffer-mode-map ("?" . casual-ibuffer-tmenu) ;; 'h' and '?' both bound to describe-mode, we'll just take the latter
+	 :map Info-mode-map ("?" . casual-info-tmenu)
+  ))
 
 ;; -- projectile
 
