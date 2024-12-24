@@ -312,32 +312,37 @@
   :config
   (nerd-icons-completion-mode))
 
-(use-package corfu
-  :when (display-graphic-p)
-  :hook (lsp-completion-mode . kb/corfu-setup-lsp) ; Use corfu for lsp completion
-  ;;:ensure t
-  :custom
-  ;(tab-always-indent 'complete)
-  (corfu-auto t)
-  (corfu-auto-prefix 2)
-  (corfu-auto-delay 0.25)
-  (lsp-completion-provider :none)       ; Use corfu instead for lsp completions
+(use-package company
   :init
-  (global-corfu-mode)
-  :config
-  ;; Setup lsp to use corfu for lsp completion
-  (defun kb/corfu-setup-lsp ()
-    "Use orderless completion style with lsp-capf instead of the
-  default lsp-passthrough."
-    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-          '(orderless)))
-  
+  (global-company-mode)
   )
 
-(use-package corfu-terminal
-  :unless (display-graphic-p)
-  :init
-  (corfu-terminal-mode +1))
+;; (use-package corfu
+;;   :when (display-graphic-p)
+;;   :hook (lsp-completion-mode . kb/corfu-setup-lsp) ; Use corfu for lsp completion
+;;   ;;:ensure t
+;;   :custom
+;;   ;(tab-always-indent 'complete)
+;;   (corfu-auto t)
+;;   (corfu-auto-prefix 2)
+;;   (corfu-auto-delay 0.25)
+;;   (lsp-completion-provider :none)       ; Use corfu instead for lsp completions
+;;   :init
+;;   (global-corfu-mode)
+;;   :config
+;;   ;; Setup lsp to use corfu for lsp completion
+;;   (defun kb/corfu-setup-lsp ()
+;;     "Use orderless completion style with lsp-capf instead of the
+;;   default lsp-passthrough."
+;;     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+;;           '(orderless)))
+  
+;;   )
+
+;; (use-package corfu-terminal
+;;   :unless (display-graphic-p)
+;;   :init
+;;   (corfu-terminal-mode +1))
 
 (use-package orderless
   :ensure t
