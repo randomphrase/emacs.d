@@ -562,7 +562,7 @@
 	    )
 	    1 2 3 (5 . 6))
 	compilation-error-regexp-alist-alist)
-;;(setq compilation-error-regexp-alist (remove 'gnu compilation-error-regexp-alist))
+(setq compilation-error-regexp-alist (remove 'gnu compilation-error-regexp-alist))
 (push 'gcc-strict compilation-error-regexp-alist)
 
 
