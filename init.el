@@ -317,6 +317,9 @@
   (global-company-mode)
   )
 
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
 ;; (use-package corfu
 ;;   :when (display-graphic-p)
 ;;   :hook (lsp-completion-mode . kb/corfu-setup-lsp) ; Use corfu for lsp completion
@@ -557,7 +560,10 @@
 	    ": "
 	    (or (group-n 4 "error")
 		(group-n 5 "warning")
-		(group-n 6 (or "note" (: (+ " ") "required from here")))
+		(group-n 6
+		  (or "note"
+		      (: (+ " ")
+			 (or "required from" "required by substitution"))))
 		)
 	    )
 	    1 2 3 (5 . 6))
