@@ -557,7 +557,7 @@
 	    ": "
 	    (or (group-n 4 "error")
 		(group-n 5 "warning")
-		(group-n 6 "note")
+		(group-n 6 (or "note" (: (+ " ") "required from here")))
 		)
 	    )
 	    1 2 3 (5 . 6))
