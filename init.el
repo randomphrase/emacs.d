@@ -583,6 +583,16 @@
 
 (use-package dockerfile-mode)
 
+(use-package copilot
+  :straight (:host github :repo "copilot-emacs/copilot.el" :files ("*.el"))
+  :ensure t
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-mode-map
+              ("M-C-<return>" . copilot-accept-completion)
+              ("M-C-;" . copilot-accept-completion-by-word)
+              ("M-C-'" . copilot-accept-completion-by-line)
+	      ))
+
 
 ;; -- C++
 
@@ -602,20 +612,6 @@
   (setq c-default-style "ar")
   )
 (add-hook 'c-initialization-hook 'my-c-initialization-hook)
-
-;; (defun ar-c-ts-indent-style ()
-;;   `(;; Do not indent namespace children
-;;     ;;((parent-is "declaration_list") parent-bol 0)
-;;     ;;((parent-is "namespace_definition") parent-bol 0)
-;;     ;; Add more rules as needed
-;;     ,@(alist-get 'common (c-ts-mode--indent-styles 'cpp))
-;;     ))
-
-;; (use-package c-ts-mode
-;;   :custom
-;;   (c-ts-mode-indent-style 'ar-c-ts-indent-style)
-;;   )
-
 
 ;; .ipp files are common in boost
 (add-to-list 'auto-mode-alist '("\\.ipp\\'" . c++-mode) t)
