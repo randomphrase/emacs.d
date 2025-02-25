@@ -235,11 +235,15 @@
 
 ;; -- projectile
 
+(use-package savehist
+  :init
+  (savehist-mode))
+
 (use-package project
   :ensure t)
 
 (use-package projectile
-  :after (project)
+  :after (project savehist)
   :ensure t
   :init
   (projectile-mode +1)
@@ -253,10 +257,6 @@
 
 (use-package rg
   :bind ("C-c s" . rg-menu))
-
-(use-package savehist
-  :init
-  (savehist-mode))
 
 (recentf-mode 1)
 
