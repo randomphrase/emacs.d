@@ -196,6 +196,9 @@
 ;; Get rid of overwrite-mode, this one is far more useful
 (global-set-key [remap overwrite-mode] 'copy-from-above-command)
 
+;; on macos I sometimes hit this by mistake
+(global-set-key (kbd "s-<backspace>") 'backward-kill-word)
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (use-package mwim
