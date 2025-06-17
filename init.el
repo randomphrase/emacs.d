@@ -243,11 +243,8 @@
   :init
   (savehist-mode))
 
-(use-package project
-  :ensure t)
-
 (use-package projectile
-  :after (project savehist)
+  :after (savehist)
   :ensure t
   :init
   (projectile-mode +1)
