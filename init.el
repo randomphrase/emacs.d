@@ -545,8 +545,9 @@
   :hook (prog-mode . yas-minor-mode)
   )
 
-(setq compilation-scroll-output 'first-error)
-(push `(gcc-strict
+(with-eval-after-load "compilation"
+  (setq compilation-scroll-output 'first-error)
+  (push `(gcc-strict
 	  ,(rx
 	    bol
 	    (group-n 1
@@ -576,9 +577,9 @@
 	    )
 	    1 2 3 (5 . 6))
 	compilation-error-regexp-alist-alist)
-(setq compilation-error-regexp-alist (remove 'gnu compilation-error-regexp-alist))
-(push 'gcc-strict compilation-error-regexp-alist)
-
+  (setq compilation-error-regexp-alist (remove 'gnu compilation-error-regexp-alist))
+  (push 'gcc-strict compilation-error-regexp-alist)
+)
 
 (use-package editorconfig
   :hook (after-init . editorconfig-mode))
