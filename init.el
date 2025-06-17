@@ -566,7 +566,11 @@
 		(group-n 6
 		  (or "note"
 		      (: (+ " ")
-			 (or "required from" "required by substitution"))))
+			 (or "required from"
+			     "required by substitution"
+			     "In instantiation of"
+			     "in 'constexpr' expansion of"
+			     ))))
 		)
 	    )
 	    1 2 3 (5 . 6))
