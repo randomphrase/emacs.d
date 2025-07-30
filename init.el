@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t -*-
 
+(setq native-comp-async-report-warnings-errors 'silent)
+
 (setq straight-use-package-by-default t)
 (setq straight-fix-flycheck t)
 
