@@ -129,7 +129,7 @@
           help-mode
           compilation-mode
 	  helpful-mode
-	  special-mode ;; used for Warnings
+	  (special-mode . hide) ;; used for Warnings
 	  flycheck-error-list-mode flycheck-verify-mode
 	  "^\\*vterm.*\\*$"  vterm-mode
 	  ))
