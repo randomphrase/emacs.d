@@ -492,10 +492,6 @@
   (ansi-color-for-compilation-mode t)
   )
 
-(use-package vterm
-  :bind (("<f9>" . vterm))
-  )
-
 ;; -- programming
 
 (use-package treesit-auto
