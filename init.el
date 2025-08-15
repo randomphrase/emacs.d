@@ -496,8 +496,16 @@
 
 (use-package treesit-auto
   :if (and (fboundp 'treesit-available-p) (treesit-available-p)) ;; FIXME
+
+  ;; PR #130 is from user "repelliuss", branch "main"
+  :straight (treesit-auto
+             :type git
+             :host github
+             :repo "renzmann/treesit-auto"
+             :fork (:repo "repelliuss/treesit-auto" :branch "main"))
+
   :custom
-  (treesit-auto-install 'prompt)
+  (treesit-auto-install 't)
   :config
   (add-to-list 'treesit-auto-recipe-list
 	       (make-treesit-auto-recipe
@@ -506,7 +514,6 @@
 		:remap 'nix-mode
 		:url "https://github.com/nix-community/tree-sitter-nix"
 		:ext "\\.nix\\'"))
-  ;(push 'nix treesit-auto-langs) ;; needed?
   (global-treesit-auto-mode)
   )
 
