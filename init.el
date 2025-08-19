@@ -190,6 +190,8 @@
 (use-package which-key
   :hook
   (after-init . which-key-mode)
+  :custom
+  (which-key-max-description-length nil) ;; dont truncate function names
 )
 
 (use-package delsel
