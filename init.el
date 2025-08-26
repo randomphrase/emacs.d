@@ -228,17 +228,19 @@
          ("r"                       . remove-hook-at-point))
   )
 
-(use-package info+
-  :ensure t)
-
 (use-package devdocs
   :bind ("C-h D" . devdocs-lookup))
 
 (use-package casual
   :after (dired)
-  :bind (:map dired-mode-map ("?" . casual-dired-tmenu)
-	 :map ibuffer-mode-map ("?" . casual-ibuffer-tmenu) ;; 'h' and '?' both bound to describe-mode, we'll just take the latter
-	 :map Info-mode-map ("?" . casual-info-tmenu)
+  :bind (:map dired-mode-map
+	 ("?" . casual-dired-tmenu)
+	 :map ibuffer-mode-map
+	 ("?" . casual-ibuffer-tmenu) ;; 'h' and '?' both bound to describe-mode, we'll just take the latter
+	 :map Info-mode-map
+	 ("?" . casual-info-tmenu)
+	 ("M-[" . Info-history-back)
+	 ("M-]" . Info-history-forward)
   ))
 
 ;; -- projectile
