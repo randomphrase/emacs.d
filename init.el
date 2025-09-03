@@ -635,6 +635,25 @@
   )
 (add-hook 'c-initialization-hook 'my-c-initialization-hook)
 
+;; tree-sit configuration for c++
+;; see also https://emacs.stackexchange.com/a/78291
+(defun ar-cpp-indent-style()
+  "Override C++ indentation style to my preferred one."
+  `(
+    ;; dont indent the body of a namespace
+    ((parent-is "declaration_list") parent-bol 0)
+
+    ;; Append here the indent style you want as base
+   ,@(alist-get 'gnu (c-ts-mode--indent-styles 'cpp)))
+  )
+
+(use-package c-ts-mode
+  :if (treesit-language-available-p 'c)
+  :custom
+  (c-ts-mode-indent-style 'ar-cpp-indent-style)
+  )
+
+
 ;; .ipp files are common in boost
 (add-to-list 'auto-mode-alist '("\\.ipp\\'" . c++-mode) t)
 
