@@ -641,7 +641,7 @@
   "Override C++ indentation style to my preferred one."
   `(
     ;; dont indent the body of a namespace
-    ((parent-is "declaration_list") parent-bol 0)
+    ((n-p-gp nil "declaration_list" "namespace_definition") parent-bol 0)
 
     ;; Append here the indent style you want as base
    ,@(alist-get 'gnu (c-ts-mode--indent-styles 'cpp)))
