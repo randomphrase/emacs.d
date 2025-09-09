@@ -651,6 +651,11 @@
     ;; dont indent the body of a namespace
     ((n-p-gp nil "declaration_list" "namespace_definition") parent-bol 0)
 
+    ;; use 'normal' indenting of parameters, arguments, etc
+    ((parent-is "parenthesized_expression") parent-bol c-ts-mode-indent-offset)
+    ((parent-is "argument_list") parent-bol c-ts-mode-indent-offset)
+    ((parent-is "parameter_list") parent-bol c-ts-mode-indent-offset)
+    
     ;; Append here the indent style you want as base
    ,@(alist-get 'gnu (c-ts-mode--indent-styles 'cpp)))
   )
