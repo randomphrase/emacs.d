@@ -498,6 +498,14 @@
 
 ;; -- programming
 
+;; Never use tabs by default
+(setq-default indent-tabs-mode nil)
+
+(add-hook 'makefile-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode t)))   ;; tabs required in Makefiles
+
+
 (use-package treesit-auto
   :if (and (fboundp 'treesit-available-p) (treesit-available-p)) ;; FIXME
 
