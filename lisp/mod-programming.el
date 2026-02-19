@@ -93,7 +93,7 @@
   :hook (after-init . editorconfig-mode))
 
 (use-package yaml-mode
-  :mode "\\.ya?ml\\'")
+  :mode "\\.ya?ml\\'" ".clang-tidy\\'")
 
 (use-package markdown-mode
   :ensure t)
