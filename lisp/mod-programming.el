@@ -10,14 +10,6 @@
 
 (use-package treesit-auto
   :if (and (fboundp 'treesit-available-p) (treesit-available-p)) ;; FIXME
-
-  ;; PR #130 is from user "repelliuss", branch "main"
-  :straight (treesit-auto
-             :type git
-             :host github
-             :repo "renzmann/treesit-auto"
-             :fork (:repo "repelliuss/treesit-auto" :branch "main"))
-
   :custom
   (treesit-auto-install 't)
   :config
