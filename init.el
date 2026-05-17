@@ -27,6 +27,7 @@
         mod-git
         mod-shell
         mod-programming
+        mod-markdown
         mod-ai
         mod-cpp
         mod-python

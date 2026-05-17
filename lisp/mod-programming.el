@@ -95,9 +95,6 @@
 (use-package yaml-mode
   :mode "\\.ya?ml\\'" ".clang-tidy\\'")
 
-(use-package markdown-mode
-  :ensure t)
-
 (use-package dockerfile-mode)
 
 (use-package nix-ts-mode
