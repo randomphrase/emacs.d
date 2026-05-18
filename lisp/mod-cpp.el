@@ -47,7 +47,12 @@
 ;; .ipp files are common in boost
 (add-to-list 'auto-mode-alist '("\\.ipp\\'" . c++-mode) t)
 
-(use-package cmake-mode)
+(use-package cmake-mode
+  :init
+  (unless (executable-find "cmake-language-server")
+    ;; note workaround for #101
+    (shell-command "uv tool install --with \"pygls>= 1.1.1, <2.0.0\" cmake-language-server"))
+  )
 
 (use-package meson-mode
   :mode "meson.build\\'")
