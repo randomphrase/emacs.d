@@ -9,6 +9,7 @@
   :mode "\\.mermaid\\'")
 
 (use-package grip-mode
+  :straight (grip-mode :type git :host github :repo "randomphrase/grip-mode")
   :after (markdown-mode)
   :custom
   (grip-command 'go-grip)
