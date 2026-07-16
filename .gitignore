@@ -12,3 +12,8 @@
 /projects
 /devdocs/
 /custom.el
+/elpa/
+/tramp
+/backups/
+/autosaves/
+/auto-save-list/

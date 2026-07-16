@@ -22,12 +22,14 @@
 (straight-use-package 'use-package)
 
 ;; Files, backups, recentf, etc.
-;; (setq inhibit-startup-screen t
-;;       ring-bell-function 'ignore
-;;       create-lockfiles nil
-;;       sentence-end-double-space nil
-;;       backup-directory-alist `(("." . ,(locate-user-emacs-file "backups/")))
-;;       auto-save-file-name-transforms `((".*" ,(locate-user-emacs-file "autosaves/") t)))
+(setq inhibit-startup-screen t
+      ring-bell-function 'ignore
+      create-lockfiles nil
+      sentence-end-double-space nil
+      backup-directory-alist `(("." . ,(locate-user-emacs-file "backups/")))
+      auto-save-file-name-transforms `((".*" ,(locate-user-emacs-file "autosaves/") t)))
+;; Auto-save needs its target directory to exist (backups creates its own)
+(make-directory (locate-user-emacs-file "autosaves/") t)
 
 
 (use-package exec-path-from-shell
