@@ -15,6 +15,15 @@
   )
 
 ;; save/restore desktop - do last to ensure all modes are ready
+(require 'desktop) ; desktop-minor-mode-table isn't defined until loaded
+;; Don't restore lsp's minor modes as inert flags: without a server behind
+;; them a buffer looks LSP-enabled but isn't. lsp-deferred starts the real
+;; thing when the buffer becomes visible.
+(dolist (mode '(lsp-mode lsp-managed-mode lsp-diagnostics-mode
+                lsp-completion-mode lsp-headerline-breadcrumb-mode
+                lsp-modeline-code-actions-mode lsp-modeline-diagnostics-mode
+                lsp-modeline-workspace-status-mode))
+  (add-to-list 'desktop-minor-mode-table (list mode nil)))
 (desktop-save-mode 1)
 
 ;; -- server
