@@ -2,6 +2,7 @@
 
 
 (use-package which-key
+  :straight nil ;; built-in since Emacs 30
   :hook
   (after-init . which-key-mode)
   :custom
@@ -9,6 +10,7 @@
 )
 
 (use-package delsel
+  :straight nil
   :hook
   (after-init . delete-selection-mode))
 
@@ -28,12 +30,6 @@
 ;; my fingers are used to meta as 'the one next to the space bar', so this is to not disappoint them:
 (customize-set-variable 'ns-command-modifier 'meta)
 (customize-set-variable 'ns-alternate-modifier 'super)
-
-;; (use-package which-key-posframe
-;;   :after which-key
-;;   :init
-;;   (setq which-key-posframe-poshandler #'posframe-poshandler-frame-bottom-center)
-;;   )
 
 (provide 'mod-keys)
 ;;; mod-keys.el ends here

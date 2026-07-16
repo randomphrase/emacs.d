@@ -90,6 +90,7 @@
 )
 
 (use-package editorconfig
+  :straight nil ;; built-in since Emacs 30.1
   :hook (after-init . editorconfig-mode))
 
 (use-package yaml-mode

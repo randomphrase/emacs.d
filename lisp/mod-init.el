@@ -21,6 +21,11 @@
 
 (straight-use-package 'use-package)
 
+;; Built into Emacs 30+ but also declared as a dependency by third-party
+;; packages (copilot → editorconfig), which would make straight clone and
+;; shadow the built-in. Listing here makes straight skip them everywhere.
+(add-to-list 'straight-built-in-pseudo-packages 'editorconfig)
+
 ;; Files, backups, recentf, etc.
 (setq inhibit-startup-screen t
       ring-bell-function 'ignore

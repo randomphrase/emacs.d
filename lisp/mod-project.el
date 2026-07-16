@@ -1,6 +1,7 @@
 ;;; mod-project.el --- Project navigation/search -*- lexical-binding: t; -*-
 
 (use-package savehist
+  :straight nil
   :init
   (savehist-mode))
 

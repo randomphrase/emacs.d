@@ -38,6 +38,7 @@
   )
 
 (use-package c-ts-mode
+  :straight nil
   :if (treesit-language-available-p 'c)
   :custom
   (c-ts-mode-indent-style 'ar-cpp-indent-style)

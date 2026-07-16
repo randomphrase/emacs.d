@@ -1,6 +1,7 @@
 ;;; mod-shell.el --- Shells & terminals -*- lexical-binding: t; -*-
 
 (use-package ansi-color
+  :straight nil
   :hook
   (compilation-filter . ansi-color-compilation-filter)
   :custom
