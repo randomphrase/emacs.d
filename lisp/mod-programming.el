@@ -47,28 +47,22 @@
               ("M-n" . flymake-goto-next-error)
               ("M-p" . flymake-goto-prev-error)))
 
-(use-package lsp-mode
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  :config
-  (push "[/\\\\]\\.cache\\'" lsp-file-watch-ignored-directories) ;; clangd stores its index here
-  (push "[/\\\\]build\\(\\.[^/\\\\]+\\)?\\'" lsp-file-watch-ignored-directories) ;; ignore build(.foo) directories too
+(use-package eglot
+  :straight nil
+  :hook (((c++-mode c++-ts-mode
+           cmake-mode cmake-ts-mode
+           python-mode python-ts-mode
+           typescript-mode typescript-ts-mode) . eglot-ensure))
   :custom
-  (lsp-diagnostics-provider :flymake)
-  (lsp-headerline-breadcrumb-segments '(symbols))
-  (lsp-enable-on-type-formatting nil)
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (c++-mode . lsp-deferred)
-	 (c++-ts-mode . lsp-deferred)
-	 (cmake-mode . lsp-deferred)
-	 (cmake-ts-mode . lsp-deferred)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration)
-	 (typescript-mode . lsp-deferred)
-	 (typescript-ts-mode . lsp-deferred)
-	 )
-  :commands (lsp lsp-deferred))
+  ;; on-type formatting fights with electric-indent; same setting as before
+  (eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider))
+  :bind (:map eglot-mode-map
+              ;; keep the lsp-mode-era C-c l prefix for muscle memory
+              ;; (deliberately no eglot-format binding: indentation is
+              ;; handled by our c-ts-mode style, not clang-format)
+              ("C-c l r" . eglot-rename)
+              ("C-c l a" . eglot-code-actions)
+              ("C-c l h" . eglot-inlay-hints-mode)))
 
 (use-package yasnippet
   :hook (prog-mode . yas-minor-mode)

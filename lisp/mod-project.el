@@ -33,11 +33,15 @@
 Ask clangd when it manages this buffer (it knows the real answer);
 otherwise fall back to suffix matching via `ff-find-other-file'."
   (interactive)
-  (if (and (bound-and-true-p lsp-mode)
-           (derived-mode-p 'c-mode 'c++-mode 'c-ts-mode 'c++-ts-mode)
-           (fboundp 'lsp-clangd-find-other-file))
-      (lsp-clangd-find-other-file)
-    (ff-find-other-file)))
+  (let* ((server (and (derived-mode-p 'c-mode 'c++-mode 'c-ts-mode 'c++-ts-mode)
+                      (fboundp 'eglot-current-server)
+                      (eglot-current-server)))
+         (other (and server
+                     (jsonrpc-request server :textDocument/switchSourceHeader
+                                      (list :uri (eglot-path-to-uri buffer-file-name))))))
+    (if (and other (not (string-empty-p other)))
+        (find-file (eglot-uri-to-path other))
+      (ff-find-other-file))))
 
 (defvar ar/test-file-suffix "_tests"
   "Suffix distinguishing a test file from the implementation it tests.")
