@@ -48,7 +48,7 @@
           compilation-mode
 	  helpful-mode
 	  ;; (special-mode . hide) ;; used for Warnings
-	  flycheck-error-list-mode flycheck-verify-mode
+	  flymake-diagnostics-buffer-mode flymake-project-diagnostics-mode
 	  "^\\*vterm.*\\*$"  vterm-mode
 	  ))
   (popper-mode +1)

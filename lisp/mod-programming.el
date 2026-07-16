@@ -23,9 +23,29 @@
   (global-treesit-auto-mode)
   )
 
-(use-package flycheck
-  :init
-  (global-flycheck-mode))
+;; elisp-flymake-byte-compile refuses to run on files outside
+;; trusted-content (macroexpansion can execute code), so trust our own
+;; config. Deliberately excludes straight/ -- visiting third-party
+;; sources shouldn't macroexpand them.
+(setq trusted-content '("~/.emacs.d/init.el"
+                        "~/.emacs.d/early-init.el"
+                        "~/.emacs.d/lisp/"))
+
+;; Our config modules can't be byte-compiled standalone (use-package,
+;; straight etc. only exist once a session is bootstrapped), so the
+;; byte-compile backend yields only false positives there. Keep checkdoc.
+(defun ar/elisp-flymake-skip-byte-compile ()
+  (when (and buffer-file-name
+             (file-in-directory-p buffer-file-name user-emacs-directory))
+    (remove-hook 'flymake-diagnostic-functions #'elisp-flymake-byte-compile t)))
+
+(use-package flymake
+  :straight nil
+  :hook ((prog-mode . flymake-mode)
+         (emacs-lisp-mode . ar/elisp-flymake-skip-byte-compile))
+  :bind (:map flymake-mode-map
+              ("M-n" . flymake-goto-next-error)
+              ("M-p" . flymake-goto-prev-error)))
 
 (use-package lsp-mode
   :init
@@ -35,6 +55,7 @@
   (push "[/\\\\]\\.cache\\'" lsp-file-watch-ignored-directories) ;; clangd stores its index here
   (push "[/\\\\]build\\(\\.[^/\\\\]+\\)?\\'" lsp-file-watch-ignored-directories) ;; ignore build(.foo) directories too
   :custom
+  (lsp-diagnostics-provider :flymake)
   (lsp-headerline-breadcrumb-segments '(symbols))
   (lsp-enable-on-type-formatting nil)
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)

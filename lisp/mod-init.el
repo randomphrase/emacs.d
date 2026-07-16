@@ -3,7 +3,6 @@
 (setq native-comp-async-report-warnings-errors 'silent)
 
 (setq straight-use-package-by-default t)
-;(setq straight-fix-flycheck t)
 ;(setq straight-cache-autoloads nil)
 
 (defvar bootstrap-version)
