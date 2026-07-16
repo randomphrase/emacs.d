@@ -10,6 +10,10 @@
 
 (use-package envrc
   :if (executable-find "direnv")
+  ;; :bind implies deferred loading, which would postpone
+  ;; envrc-global-mode until the first C-c e; :demand forces the load.
+  ;; This module runs last, satisfying envrc's "enable late" advice.
+  :demand t
   :config (envrc-global-mode)
   :bind ("C-c e" . envrc-command-map)
   )
