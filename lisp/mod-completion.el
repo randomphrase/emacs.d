@@ -38,13 +38,44 @@
   :config
   (nerd-icons-completion-mode))
 
-(use-package company
+(use-package corfu
+  ;; special recipe to load extensions (same pattern as vertico)
+  :straight (corfu :files (:defaults "extensions/*")
+                   :includes (corfu-popupinfo))
+  :custom
+  (corfu-auto t)  ;; default is manual-only completion; the rest stay default
   :init
-  (global-company-mode)
-  )
+  (global-corfu-mode)
+  :config
+  (corfu-popupinfo-mode))  ;; docs beside candidates (company-box equivalent)
 
-(use-package company-box
-  :hook (company-mode . company-box-mode))
+;; corfu draws in a child frame, which Emacs 30 lacks on TTY; corfu-terminal
+;; fills in there (it no-ops on graphical frames, so enable unconditionally
+;; — right for daemon/mixed sessions too). It and its dependency popon live
+;; on codeberg.org, which the work proxy blocks: use GitHub mirrors
+;; (third-party, but verified byte-identical to the codeberg HEADs — see
+;; PLAN.md for the hashes; emacsmirror doesn't carry NonGNU packages).
+;; Emacs 31 has TTY child frames; drop both once every deployment is there.
+(use-package popon
+  :straight (popon :host github :repo "jmorag/emacs-popon")
+  :defer t)
+
+(use-package corfu-terminal
+  :straight (corfu-terminal :host github :repo "wyuenho/emacs-corfu-terminal")
+  :after corfu
+  :config (corfu-terminal-mode +1))
+
+(use-package nerd-icons-corfu
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+;; Generic fallback capfs (company's dabbrev/file backends equivalent);
+;; mode-specific capfs like eglot's still take precedence.
+(use-package cape
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file))
 
 (use-package orderless
   :ensure t
