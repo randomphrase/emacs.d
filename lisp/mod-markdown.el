@@ -2,6 +2,9 @@
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . gfm-mode)
+  :custom
+  ;; Fontify ``` fenced blocks with each language's real major mode.
+  (markdown-fontify-code-blocks-natively t)
   :bind (:map markdown-mode-map
               ([remap markdown-live-preview-mode] . grip-mode)))
 
