@@ -106,7 +106,13 @@
 
 (use-package editorconfig
   :straight nil ;; built-in since Emacs 30.1
-  :hook (after-init . editorconfig-mode))
+  ;; Enable eagerly, NOT on after-init: desktop.el's restore also runs
+  ;; from after-init-hook and, being added last (mod-last), runs first
+  ;; -- buffers would be restored before editorconfig-mode is on, and
+  ;; its settings only apply during a buffer's dir-locals pass, leaving
+  ;; restored buffers at default indentation until reverted.
+  :demand t
+  :config (editorconfig-mode 1))
 
 (use-package yaml-mode
   :mode "\\.ya?ml\\'" ".clang-tidy\\'")
