@@ -34,6 +34,20 @@
     ;;   (select-window (winum-get-window-by-number windownum))))))
     ))
 
+;; *Warnings* used to pop up as a normal bottom window; being neither
+;; dedicated nor a side window, later display-buffer calls (e.g. a magit
+;; diff) would reuse or split it, squeezing the new buffer into two
+;; lines. A dedicated bottom *side* window can't be split or reused for
+;; other buffers. (Handling *Warnings* via popper was tried and reverted:
+;; popper switches the current buffer, which error handlers running at
+;; warning time don't tolerate.) Dismiss with q or C-x 0.
+(add-to-list 'display-buffer-alist
+             '("\\`\\*Warnings\\*\\'"
+               (display-buffer-in-side-window)
+               (side . bottom)
+               (window-height . 8)
+               (dedicated . t)))
+
 (use-package popper
   :ensure t ; or :straight t
   :bind (("C-`"   . popper-toggle)

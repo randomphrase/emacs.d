@@ -6,6 +6,12 @@
   :custom
   (copilot-max-char 200000)
   :config
+  ;; Decision: copilot warnings (size limit etc.) stay visible -- the
+  ;; *Warnings* side-window rule in mod-window makes them unobtrusive.
+  ;; To silence them entirely instead, uncomment this; matching is
+  ;; prefix-based, so (copilot) covers every (copilot ...) subtype.
+  ;; (Also: copilot-max-char-warning-disable kills just the size nag.)
+  ;; (add-to-list 'warning-suppress-types '(copilot))
   (add-to-list 'copilot-indentation-alist
 	       '(emacs-lisp-mode . 2)
 	       '(makefile-mode . 4)
