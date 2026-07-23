@@ -2,6 +2,8 @@
 
 (use-package savehist
   :straight nil
+  :custom
+  (savehist-additional-variables '(search-ring regexp-search-ring))
   :init
   (savehist-mode))
 

@@ -21,6 +21,7 @@
         mod-ui
         mod-window
         mod-keys
+        mod-editing
         mod-help
         mod-project
         mod-completion
