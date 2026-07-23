@@ -19,6 +19,25 @@
 
 (keymap-global-set "M-o" 'other-window-alternating)
 
+;; When a window is split or deleted, resize all siblings proportionally
+;; rather than taking the space from a single neighbour.
+(setq window-combination-resize t)
+
+;; Undo/redo window-configuration changes (C-c <left> / C-c <right>).
+(use-package winner
+  :straight nil
+  :hook (after-init . winner-mode))
+
+;; Make C-x 1 reversible: from a single window it restores the prior layout
+;; via winner instead of being a dead end.
+(defun ar/toggle-delete-other-windows ()
+  "Delete other windows; if already the sole window, restore the prior layout."
+  (interactive)
+  (if (and (bound-and-true-p winner-mode) (one-window-p))
+      (winner-undo)
+    (delete-other-windows)))
+(keymap-global-set "C-x 1" #'ar/toggle-delete-other-windows)
+
 (defun move-buffer-to-window (wnum)
   "Moves the current buffer to window `WNUM'."
   ;; stolen from spacemacs, see https://github.com/syl20bnr/spacemacs/blob/195090a247496d44907084a3ee1d128f54622216/layers/%2Bspacemacs/spacemacs-defaults/funcs.el#L297
