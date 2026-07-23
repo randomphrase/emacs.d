@@ -1,5 +1,9 @@
 ;;; mod-help.el --- Help & discovery -*- lexical-binding: t; -*-
 
+;; Select help windows when they pop up, so you can scroll or quit (q) them
+;; without first switching over.
+(setq help-window-select t)
+
 (use-package helpful
   :bind (([remap describe-function] . helpful-callable)
          ([remap describe-command]  . helpful-command)
