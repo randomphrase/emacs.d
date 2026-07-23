@@ -15,6 +15,11 @@
 
 (setq split-height-threshold 100)
 
+;; No cursor or region highlight in windows that aren't selected: less visual
+;; noise across a split, and slightly less redisplay work.
+(setq cursor-in-non-selected-windows nil
+      highlight-nonselected-windows nil)
+
 (use-package nerd-icons)
 
 (use-package nerd-icons-dired

@@ -47,6 +47,10 @@
               ("M-n" . flymake-goto-next-error)
               ("M-p" . flymake-goto-prev-error)))
 
+;; LSP servers (clangd, pyright) stream large JSON responses; a bigger read
+;; buffer means fewer read syscalls and a snappier eglot.
+(setq read-process-output-max (* 4 1024 1024))
+
 (use-package eglot
   :straight nil
   :hook (((c++-mode c++-ts-mode

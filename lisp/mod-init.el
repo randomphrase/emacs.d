@@ -35,6 +35,13 @@
 ;; Auto-save needs its target directory to exist (backups creates its own)
 (make-directory (locate-user-emacs-file "autosaves/") t)
 
+;; Redisplay performance. This config only ever shows left-to-right text, so
+;; the bidirectional-display engine never needs to scan for right-to-left
+;; runs. (bidi-display-reordering is deliberately left alone -- it's
+;; documented as internal-use and setting it directly is discouraged.)
+(setq-default bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t                       ;; skip bidi paren-matching scans
+      redisplay-skip-fontification-on-input t) ;; defer fontification while typing
 
 (use-package exec-path-from-shell
   :when (memq window-system '(mac ns))
