@@ -1,0 +1,21 @@
+# EditorConfig for this Emacs configuration repo.
+# editorconfig-mode is enabled (mod-programming), so these apply on open.
+root = true
+
+[*]
+indent_style = space
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Deliberately no indent_size for elisp: editorconfig would map it to
+# lisp-indent-offset, overriding Emacs's context-sensitive indentation
+# with a rigid one. Let Emacs compute indentation; just keep it spaces.
+
+# Makefiles genuinely require hard tabs.
+[Makefile]
+indent_style = tab
+
+# Markdown uses two trailing spaces as a hard line break; trimming them
+# would silently corrupt documents.
+[*.md]
+trim_trailing_whitespace = false

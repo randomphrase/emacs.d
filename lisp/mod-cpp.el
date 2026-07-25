@@ -32,7 +32,7 @@
 
     ;; opening bracket on the next line after an if/for/while etc
     ((node-is "compound_statement") standalone-parent 0)
-    
+
     ;; Append here the indent style you want as base
    ,@(alist-get 'gnu (c-ts-mode--indent-styles 'cpp)))
   )

@@ -49,7 +49,7 @@
   :when (memq window-system '(mac ns))
   :config
   (exec-path-from-shell-initialize)
-  ;; 
+  ;;
   )
 
 (provide 'mod-init)
