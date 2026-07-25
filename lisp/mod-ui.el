@@ -22,6 +22,17 @@
 
 (use-package nerd-icons)
 
+(use-package dired
+  :straight nil
+  :config
+  ;; macOS ships BSD ls, which lacks --dired and makes dired warn. Prefer
+  ;; GNU ls (coreutils `gls') when it's installed; otherwise tell dired
+  ;; not to pass --dired. Linux (GNU ls) is unaffected.
+  (when (eq system-type 'darwin)
+    (if (executable-find "gls")
+        (setq insert-directory-program "gls")
+      (setq dired-use-ls-dired nil))))
+
 (use-package nerd-icons-dired
   :hook
   (dired-mode . nerd-icons-dired-mode))
