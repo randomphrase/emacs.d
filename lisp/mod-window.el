@@ -67,32 +67,33 @@
                (window-height . 8)
                (dedicated . t)))
 
-(use-package popper
-  :ensure t ; or :straight t
-  :bind (("C-`"   . popper-toggle)
-         ("M-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
-  :init
-  (setq popper-reference-buffers
-        '("\\*Messages\\*"
-          "Output\\*$"
-          "\\*Async Shell Command\\*"
-          help-mode
-          compilation-mode
-	  helpful-mode
-	  ;; (special-mode . hide) ;; used for Warnings
-	  flymake-diagnostics-buffer-mode flymake-project-diagnostics-mode
-	  "^\\*vterm.*\\*$"  vterm-mode
-	  ))
-  (popper-mode +1)
-  (popper-echo-mode +1)
-  (setq popper-window-height  (lambda (win)
-				(fit-window-to-buffer
-				 win
-				 (floor (frame-height) 3)
-				 (floor (frame-height) 3)
-				 )))
-  )
+;; Transient output/diagnostic buffers share one bottom side window --
+;; the job popper used to do, now via built-in window placement. A side
+;; window is never split or reused for an unrelated buffer, so these
+;; panels can't disturb the editing windows (the disease the *Warnings*
+;; rule above also cures); sharing slot 0 means only one shows at a
+;; time. `derived-mode' conditions match subclasses too, so grep/rg
+;; (rg-mode derives from compilation-mode) land here for free.
+(add-to-list
+ 'display-buffer-alist
+ '((or (derived-mode . help-mode)
+       (derived-mode . helpful-mode)
+       (derived-mode . compilation-mode)
+       (derived-mode . flymake-diagnostics-buffer-mode)
+       (derived-mode . flymake-project-diagnostics-mode)
+       "\\`\\*Messages\\*\\'"
+       "\\`\\*Async Shell Command\\*\\'"
+       "Output\\*\\'")
+   (display-buffer-in-side-window)
+   (side . bottom)
+   (slot . 0)
+   (window-height . 0.33)
+   (preserve-size . (nil . t))))
+
+;; C-` hides/restores every side window at once -- the popper-toggle
+;; analogue. (popper's M-` per-popup cycling is deliberately not
+;; replaced; "show/hide my panels" is the operation actually wanted.)
+(keymap-global-set "C-`" #'window-toggle-side-windows)
 
 ;; (use-package ace-window
 ;;   :bind ("M-o" . ace-window)
