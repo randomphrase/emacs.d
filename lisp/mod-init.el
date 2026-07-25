@@ -24,6 +24,8 @@
 ;; packages (copilot → editorconfig), which would make straight clone and
 ;; shadow the built-in. Listing here makes straight skip them everywhere.
 (add-to-list 'straight-built-in-pseudo-packages 'editorconfig)
+;; Same for project.el (a declared dependency of projection).
+(add-to-list 'straight-built-in-pseudo-packages 'project)
 
 ;; Files, backups, recentf, etc.
 (setq inhibit-startup-screen t

@@ -7,26 +7,32 @@
   :init
   (savehist-mode))
 
-(defvar ar/project-test-history nil
-  "Minibuffer history for `ar/project-test'.")
-
-(defun ar/project-test ()
-  "Run a test command from the project root (cf. `project-compile')."
-  (interactive)
-  (let* ((default-directory (project-root (project-current t)))
-         (command (read-shell-command "Test command: "
-                                      (car ar/project-test-history)
-                                      'ar/project-test-history)))
-    (compile command)))
-
 (use-package project
   :straight nil
   :bind-keymap
   ("C-c p" . project-prefix-map)
   ("s-p" . project-prefix-map)
-  :bind (("<f12>" . project-compile)
-         ("C-<f12>" . ar/project-test)
-         ("M-C-<f12>" . recompile)))
+  :bind ("M-C-<f12>" . recompile))
+
+;; Per-project-type configure/build/test/run commands on top of
+;; project.el -- the one projectile feature project.el lacks. Knows
+;; CMake (incl. presets and ctest), bazel, make, etc.; for unknown
+;; project types the commands prompt once and remember, which also
+;; retires the old ar/project-test shim.
+(use-package projection
+  :bind-keymap ("C-c P" . projection-map)
+  :bind (("<f12>" . projection-commands-build-project)
+         ("C-<f12>" . projection-commands-test-project))
+  :config
+  ;; Upstream's bazel predicate only knows WORKSPACE; bzlmod projects
+  ;; have MODULE.bazel instead.
+  (oset projection-project-type-bazel predicate
+        '("WORKSPACE" "WORKSPACE.bazel" "MODULE.bazel"))
+  ;; Upstream bug: SPC is bound to '("Extensions" . (SYMBOL)) -- the cdr
+  ;; is a *list*, not a keymap, so the whole per-project-type sub-keymap
+  ;; (cmake presets etc.) is unreachable. Rebind to the keymap's value.
+  (define-key projection-map (kbd "SPC")
+              (cons "Extensions" projection-per-project-type-map)))
 
 ;; Header/impl/test switching (projectile-find-other-file replacement)
 
