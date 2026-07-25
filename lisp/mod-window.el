@@ -53,27 +53,24 @@
     ;;   (select-window (winum-get-window-by-number windownum))))))
     ))
 
-;; *Warnings* used to pop up as a normal bottom window; being neither
-;; dedicated nor a side window, later display-buffer calls (e.g. a magit
-;; diff) would reuse or split it, squeezing the new buffer into two
-;; lines. A dedicated bottom *side* window can't be split or reused for
-;; other buffers. (Handling *Warnings* via popper was tried and reverted:
-;; popper switches the current buffer, which error handlers running at
-;; warning time don't tolerate.) Dismiss with q or C-x 0.
-(add-to-list 'display-buffer-alist
-             '("\\`\\*Warnings\\*\\'"
-               (display-buffer-in-side-window)
-               (side . bottom)
-               (window-height . 8)
-               (dedicated . t)))
-
 ;; Transient output/diagnostic buffers share one bottom side window --
 ;; the job popper used to do, now via built-in window placement. A side
 ;; window is never split or reused for an unrelated buffer, so these
-;; panels can't disturb the editing windows (the disease the *Warnings*
-;; rule above also cures); sharing slot 0 means only one shows at a
+;; panels can't disturb the editing windows -- this is what stops a
+;; later display-buffer (e.g. a magit diff) from squeezing in beside a
+;; warning, the original bug. Sharing slot 0 means only one shows at a
 ;; time. `derived-mode' conditions match subclasses too, so grep/rg
 ;; (rg-mode derives from compilation-mode) land here for free.
+;;
+;; *Warnings* is folded in here: routing it via popper was tried and
+;; reverted (popper switches the current buffer, which error handlers
+;; firing at warning time don't tolerate) -- a side window has no such
+;; problem. Dropping the old strong `dedicated' also lets you switch the
+;; panel to another buffer by hand.
+;;
+;; Height is a steady third of the frame. Fitting to content was tried
+;; but starves compilation: its output streams in *after* the window is
+;; shown, so a fit sizes to the short header and never grows.
 (add-to-list
  'display-buffer-alist
  '((or (derived-mode . help-mode)
@@ -81,7 +78,13 @@
        (derived-mode . compilation-mode)
        (derived-mode . flymake-diagnostics-buffer-mode)
        (derived-mode . flymake-project-diagnostics-mode)
-       "\\`\\*Messages\\*\\'"
+       (derived-mode . messages-buffer-mode)
+       ;; Matched by name because they have no distinctive major mode:
+       ;; *Warnings* is bare special-mode (shared with dired etc., so a
+       ;; mode match would be far too broad), shell output is
+       ;; fundamental-mode, and *…Output* is a naming convention across
+       ;; otherwise unrelated buffers.
+       "\\`\\*Warnings\\*\\'"
        "\\`\\*Async Shell Command\\*\\'"
        "Output\\*\\'")
    (display-buffer-in-side-window)
