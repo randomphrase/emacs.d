@@ -1,0 +1,26 @@
+#!/bin/sh
+# Check staged files against .editorconfig with editorconfig-checker.
+#
+# Indentation checks are disabled on purpose: existing files still carry
+# hard-tab indentation we deliberately haven't mass-converted (Emacs's
+# editorconfig-mode already stops NEW tabs). So this enforces the rules
+# that are clean repo-wide -- trailing whitespace and final newline --
+# for files that might be edited outside Emacs or changed in bulk.
+#
+# Setup on a new clone: install editorconfig-checker (nix, brew, ...) and
+#   git config core.hooksPath .githooks
+# The hook no-ops when the checker isn't installed, so a machine without
+# it can still commit.
+
+command -v editorconfig-checker >/dev/null 2>&1 || {
+  echo "pre-commit: editorconfig-checker not installed; skipping" >&2
+  exit 0
+}
+
+files=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$files" ] && exit 0
+
+# Intentional word-splitting: one path per argument (repo paths have no
+# spaces). exec so the checker's exit status becomes the hook's.
+# shellcheck disable=SC2086
+exec editorconfig-checker -disable-indentation -disable-indent-size $files

@@ -2,6 +2,7 @@
 /.*
 !/.editorconfig
 !/.gitignore
+!/.githooks/
 /eln-cache/
 /straight/
 /transient/
