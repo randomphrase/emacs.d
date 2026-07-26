@@ -3,11 +3,6 @@
 ;; Never use tabs by default
 (setq-default indent-tabs-mode nil)
 
-(add-hook 'makefile-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode t)))   ;; tabs required in Makefiles
-
-
 (use-package treesit-auto
   :if (and (fboundp 'treesit-available-p) (treesit-available-p)) ;; FIXME
   :custom
@@ -72,8 +67,13 @@
   :hook (prog-mode . yas-minor-mode)
   )
 
-(with-eval-after-load "compilation"
-  (setq compilation-scroll-output 'first-error)
+(use-package compile
+  :straight nil
+  :custom
+  ;; On a fresh build, jump to and scroll to the first error rather than
+  ;; parking at the top or tailing the very end of *compilation*.
+  (compilation-scroll-output 'first-error)
+  :config
   (push `(gcc-strict
 	  ,(rx
 	    bol
@@ -105,8 +105,7 @@
 	    1 2 3 (5 . 6))
 	compilation-error-regexp-alist-alist)
   (setq compilation-error-regexp-alist (remove 'gnu compilation-error-regexp-alist))
-  (push 'gcc-strict compilation-error-regexp-alist)
-)
+  (push 'gcc-strict compilation-error-regexp-alist))
 
 (use-package editorconfig
   :straight nil ;; built-in since Emacs 30.1
