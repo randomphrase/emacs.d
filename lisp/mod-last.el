@@ -21,7 +21,20 @@
 ;; save/restore desktop - do last to ensure all modes are ready
 ;; (No lsp-mode-style minor-mode guards needed: eglot's managed mode is
 ;; buffer-internal and isn't persisted; eglot-ensure restarts servers.)
-(desktop-save-mode 1)
+(use-package desktop
+  :straight nil
+  ;; :demand so the mode turns on at startup rather than being deferred;
+  ;; this module runs last, so all modes are ready.
+  :demand t
+  :config
+  ;; Don't persist per-buffer coding systems. A one-off mis-detection
+  ;; (e.g. a revert while coding-system-for-read was transiently bound to
+  ;; binary) would otherwise be frozen into the desktop file and replayed
+  ;; on every restart -- surfacing as a stray NO-CONVERSION in the
+  ;; modeline. Dropping it lets Emacs re-detect encoding on each visit.
+  (setq desktop-locals-to-save
+        (delq 'buffer-file-coding-system desktop-locals-to-save))
+  (desktop-save-mode 1))
 
 ;; -- server
 
