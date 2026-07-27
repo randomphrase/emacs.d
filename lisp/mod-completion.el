@@ -24,6 +24,28 @@
 	      )
   )
 
+;; On a very wide frame split into several windows, the full-width
+;; minibuffer at the bottom-left sits far from wherever you're working:
+;; activating it from the rightmost window drags your eyes across the
+;; whole display. Float the Vertico UI (prompt included) in a centered
+;; child frame instead, so completion appears near the middle of the
+;; screen. GUI-only -- posframe needs a graphical frame -- so gate it on
+;; display-graphic-p and fall back to the normal minibuffer on TTY
+;; (CLI-only servers).
+(use-package vertico-posframe
+  :if (display-graphic-p)
+  :after vertico
+  :custom
+  ;; top-center: horizontally centered, near the bottom of the frame
+  ;; so that it's near the minibuffer.
+  (vertico-posframe-poshandler #'posframe-poshandler-frame-bottom-center)
+  ;; a fixed, centered column rather than auto-width (which sprawls on a
+  ;; 42" frame); bump if long candidates feel cramped.
+  (vertico-posframe-width 120)
+  (vertico-posframe-border-width 2)
+  :config
+  (vertico-posframe-mode 1))
+
 (use-package marginalia
   :bind (:map minibuffer-local-map
 	      ("M-A" . marginalia-cycle))
