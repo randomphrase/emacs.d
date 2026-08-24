@@ -3,10 +3,30 @@
 ;; Never use tabs by default
 (setq-default indent-tabs-mode nil)
 
-(use-package treesit-auto
-  :if (and (fboundp 'treesit-available-p) (treesit-available-p)) ;; FIXME
+;; -- tree-sitter
+;;
+;; Emacs 31 does natively what treesit-auto did for us: it already pairs
+;; every classic mode with its ts-mode in `treesit-major-mode-remap-alist',
+;; each ts-mode registers its own commit-pinned grammar recipe when its
+;; library loads, and a missing grammar gets built on first use. All we
+;; add is the nix recipe, since nix-ts-mode is third-party.
+(use-package treesit
+  :straight nil
+  :when (and (treesit-available-p) (>= emacs-major-version 31))
+  :demand t
   :custom
-  (treesit-auto-install 't)
+  (treesit-enabled-modes t)
+  (treesit-auto-install-grammar 'always)
+  :config
+  (add-to-list 'treesit-language-source-alist
+               '(nix "https://github.com/nix-community/tree-sitter-nix")))
+
+;; Emacs 30 has neither `treesit-enabled-modes' nor grammar auto-install,
+;; so treesit-auto stays until every deployment is on 31.
+(use-package treesit-auto
+  :when (and (treesit-available-p) (< emacs-major-version 31))
+  :custom
+  (treesit-auto-install t)
   :config
   (add-to-list 'treesit-auto-recipe-list
 	       (make-treesit-auto-recipe
@@ -15,8 +35,7 @@
 		:remap 'nix-mode
 		:url "https://github.com/nix-community/tree-sitter-nix"
 		:ext "\\.nix\\'"))
-  (global-treesit-auto-mode)
-  )
+  (global-treesit-auto-mode))
 
 ;; elisp-flymake-byte-compile refuses to run on files outside
 ;; trusted-content (macroexpansion can execute code), so trust our own
