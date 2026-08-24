@@ -77,12 +77,16 @@
 ;; on codeberg.org, which the work proxy blocks: use GitHub mirrors
 ;; (third-party, but verified byte-identical to the codeberg HEADs — see
 ;; PLAN.md for the hashes; emacsmirror doesn't carry NonGNU packages).
-;; Emacs 31 has TTY child frames; drop both once every deployment is there.
+;; Emacs 31 has TTY child frames of its own and warns that corfu-terminal
+;; isn't needed, so both are gated to 30; drop them once every deployment
+;; is on 31.
 (use-package popon
+  :when (< emacs-major-version 31)
   :straight (popon :host github :repo "jmorag/emacs-popon")
   :defer t)
 
 (use-package corfu-terminal
+  :when (< emacs-major-version 31)
   :straight (corfu-terminal :host github :repo "wyuenho/emacs-corfu-terminal")
   :after corfu
   :config (corfu-terminal-mode +1))
