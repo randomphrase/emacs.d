@@ -141,8 +141,18 @@
 
 (use-package dockerfile-mode)
 
+(defun ar/nix-ts-mode ()
+  "Build the nix grammar if it's missing, then enable `nix-ts-mode'.
+nix-ts-mode predates `treesit-ensure-installed', so it only warns about
+a missing grammar where Emacs' own ts-modes would offer to build one.
+Mirrors what the built-in `*-ts-mode-maybe' dispatchers do."
+  (interactive)
+  (when (fboundp 'treesit-ensure-installed)
+    (treesit-ensure-installed 'nix))
+  (nix-ts-mode))
+
 (use-package nix-ts-mode
-  :mode "\\.nix\\'")
+  :mode ("\\.nix\\'" . ar/nix-ts-mode))
 
 ;; -- typescript
 
