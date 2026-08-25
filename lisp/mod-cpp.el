@@ -55,9 +55,5 @@
     (shell-command "uv tool install --with \"pygls>= 1.1.1, <2.0.0\" cmake-language-server"))
   )
 
-(use-package meson-mode
-  :mode "meson.build\\'")
-
-
 (provide 'mod-cpp)
 ;;; mod-cpp.el ends here
