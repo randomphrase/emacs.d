@@ -136,10 +136,23 @@
   :demand t
   :config (editorconfig-mode 1))
 
+;; Emacs 31 ships auto-mode-alist entries for YAML and Dockerfiles --
+;; the yaml-ts-mode-maybe / dockerfile-ts-mode-maybe dispatchers, which
+;; honour `treesit-enabled-modes' and install the grammar on first use.
+;; Emacs 30 has the ts modes but nothing mapping files to them, so the
+;; third-party packages stay there. Drop both blocks once every
+;; deployment is on 31.
 (use-package yaml-mode
-  :mode "\\.ya?ml\\'" ".clang-tidy\\'")
+  :when (< emacs-major-version 31)
+  :mode "\\.ya?ml\\'" "\\.clang-tidy\\'")
 
-(use-package dockerfile-mode)
+(use-package dockerfile-mode
+  :when (< emacs-major-version 31))
+
+;; .clang-tidy is YAML, but carries no extension the built-in entry
+;; matches, so it needs saying on 31 too.
+(when (>= emacs-major-version 31)
+  (add-to-list 'auto-mode-alist '("\\.clang-tidy\\'" . yaml-ts-mode-maybe)))
 
 (defun ar/nix-ts-mode ()
   "Build the nix grammar if it's missing, then enable `nix-ts-mode'.
@@ -155,13 +168,17 @@ Mirrors what the built-in `*-ts-mode-maybe' dispatchers do."
   :mode ("\\.nix\\'" . ar/nix-ts-mode))
 
 ;; -- typescript
-
-(use-package typescript-mode
-  :unless (fboundp 'typescript-ts-mode)
-  :mode "\\.ts\\'"
-  )
-(when (fboundp 'typescript-ts-mode)
-  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode)))
+;;
+;; Emacs 31 maps .ts and .tsx itself (typescript-ts-mode-maybe /
+;; tsx-ts-mode-maybe, which install the grammars too), so nothing is
+;; needed there. Emacs 30 has both ts modes but no auto-mode entries.
+;; The third-party typescript-mode is gone entirely: its old
+;; `:unless (fboundp 'typescript-ts-mode)' guard already made it dead on
+;; 29+, while its own `\\.tsx?\\'' autoload was quietly winning .tsx
+;; back off tsx-ts-mode.
+(when (< emacs-major-version 31)
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
 
 
 (provide 'mod-programming)

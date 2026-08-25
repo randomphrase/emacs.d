@@ -20,7 +20,10 @@
 ;; on macos I sometimes hit this by mistake
 (global-set-key (kbd "s-<backspace>") 'backward-kill-word)
 
-(fset 'yes-or-no-p 'y-or-n-p)
+;; Answer yes/no prompts with a single key. `use-short-answers' is the
+;; supported knob for this (Emacs 28+); the old idiom clobbered the
+;; standard function with `fset'.
+(setq use-short-answers t)
 
 (use-package mwim
   :bind (("<home>" . mwim-beginning)

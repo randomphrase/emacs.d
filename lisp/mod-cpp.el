@@ -1,22 +1,5 @@
 ;;; mod-cpp.el --- C/C++ setup -*- lexical-binding: t; -*-
 
-(defconst ar-c-style
-  '((c-basic-offset . 4)
-    (c-offsets-alist . ((inlambda . 0 )
-                        (innamespace . 0)
-                        (inline-open . 0)
-                        (substatement-open . 0)
-                        (arglist-cont-nonempty . +)
-                        ))
-    )
-  "My C++ Indentation Style")
-
-(defun my-c-initialization-hook ()
-  (c-add-style "ar" ar-c-style)
-  (setq c-default-style "ar")
-  )
-(add-hook 'c-initialization-hook 'my-c-initialization-hook)
-
 ;; -- tree-sitter indentation for C/C++
 ;;
 ;; Our own preferences, layered over the gnu base style.
@@ -86,12 +69,20 @@ carries the same rules instead."
 ;; .ipp files are common in boost
 (add-to-list 'auto-mode-alist '("\\.ipp\\'" . c++-mode) t)
 
+;; cmake-language-server isn't packaged anywhere convenient, so install it
+;; on first sight. Lifted out of the cmake-mode block below, which stops
+;; running once a deployment is on 31. (--with pins pygls: workaround for
+;; cmake-language-server#101.)
+(unless (executable-find "cmake-language-server")
+  (shell-command "uv tool install --with \"pygls>= 1.1.1, <2.0.0\" cmake-language-server"))
+
+;; Emacs 31 maps CMakeLists.txt and .cmake to cmake-ts-mode itself, via
+;; the cmake-ts-mode-maybe dispatcher in the default auto-mode-alist,
+;; which also installs the grammar. Emacs 30 has no such entry --
+;; CMakeLists.txt falls back to text-mode there -- so the package stays.
+;; Drop this block once every deployment is on 31.
 (use-package cmake-mode
-  :init
-  (unless (executable-find "cmake-language-server")
-    ;; note workaround for #101
-    (shell-command "uv tool install --with \"pygls>= 1.1.1, <2.0.0\" cmake-language-server"))
-  )
+  :when (< emacs-major-version 31))
 
 (provide 'mod-cpp)
 ;;; mod-cpp.el ends here
