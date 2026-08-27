@@ -12,6 +12,7 @@
   ;; prefix-based, so (copilot) covers every (copilot ...) subtype.
   ;; (Also: copilot-max-char-warning-disable kills just the size nag.)
   ;; (add-to-list 'warning-suppress-types '(copilot))
+  (add-to-list 'copilot-indentation-alist '(c-ts-base-mode c-ts-mode-indent-offset))
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-mode-map
               ("M-C-<return>" . copilot-accept-completion)
