@@ -34,8 +34,8 @@ or the project's .venv; the venv must already exist."
 Runs from `find-file-hook' rather than the mode hook so envrc has
 already applied the project environment."
   (when (and (derived-mode-p 'python-mode 'python-ts-mode)
-             (not (executable-find "basedpyright-langserver"))
-             (not (executable-find "pyright-langserver")))
+             (not (executable-find "basedpyright-langserver" t))
+             (not (executable-find "pyright-langserver" t)))
     (message "No pyright in this environment; M-x ar/python-install-pyright adds basedpyright to the project venv")))
 (add-hook 'find-file-hook #'ar/python-maybe-suggest-pyright)
 
